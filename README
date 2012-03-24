@@ -1,4 +1,4 @@
-=== Scripts, Algorithms, and Other Random Stuff ===
+=== Scripts, Algorithms, and Other Projects ===
 Contributors: Paul Varoutsos
 Link: www.GitHub.com/PaulVaroutsos
 Tags: SAT, WalkSAT, Ruby
@@ -9,4 +9,4 @@ various other files.
 
 == Changelog ==
 2012-3-24
-Added a Ruby Implementation of WalkSAT
+Added a Ruby implementation of WalkSAT
