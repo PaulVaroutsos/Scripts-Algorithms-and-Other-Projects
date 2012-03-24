@@ -1,0 +1,12 @@
+=== Scripts, Algorithms, and Other Random Stuff ===
+Contributors: Paul Varoutsos
+Link: www.GitHub.com/PaulVaroutsos
+Tags: SAT, WalkSAT, Ruby
+
+== Description ==
+This is a git repo of various algorithms I've written over the years, as well as
+various other files.
+
+== Changelog ==
+2012-3-24
+Added a Ruby Implementation of WalkSAT
