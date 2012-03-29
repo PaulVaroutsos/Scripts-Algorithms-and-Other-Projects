@@ -1,43 +1,50 @@
 class WalkSAT
   def initialize(file_name)
-    ###Data Structures used by WalkSAT
-    #Array of variables and their assignments vars start at 0
+    ###Data structures and variables used...###
+    #Array of variables and their assignments
+    #Variables start at index 1 (a 0 delimits the end of a clause in DIMACS format)
     @assignments = Array.new
     
-    #Array of booleans whose index corresponds to a clause and whose value 
-    #represents whether or not they are active in the formula
+    #Array of booleans that represent whether or not the clause is ACTIVE(unsatisfied) in the formula
+    #The index corresponds to the clause, starting at index 1
     @active_clauses = Array.new
     
-    #A hash whose key is the variable and whose value is an array containing
-    #all of the clauses in which the variable can be found
-    @variables_to_clauses = Array.new
-    
-    #A hash whose key is the clause and whose value is an array containing
-    #all of the variables in which the clause can be found
+    #A 2D array of all of clauses in the formula.
+    #The array at index, x, contains all variables in the clause.
+    #Clause x: @clauses_to_variables[x]
     @clauses_to_variables = Array.new
     
-    #The number of clauses that are active in the formula
-    #should be equal to the number of TRUE values in activeClauses
-    @num_clauses = -1
-    ###End data structures
+    #A 2D array that maps variables to all clauses in which they appear
+    #For variable x,  The array containing all clauses that have variable x is at index (2x-1)
+    #For variable -x, The array containing all clauses that have variable -x is at index (2x)
+    #This is the reverse of the above 2D array.
+    @variables_to_clauses = Array.new
     
-    ###Variables used by the WalkSAT algorithm
-    #The maximum number of flips
+    #The number of clauses that are active(unsatisfied) in the formula
+    #This value should be equal to the number of TRUE values in active_clauses
+    @num_clauses = -1
+    
+    #The maximum number of flips for WalkSAT
     @max_flips = 5000
     
-    #The maximum number of restarts
+    #The maximum number of restarts for WALKSAT
     @max_restarts = 100
     
-    #Probability of chosing a random flip
+    #Probability of chosing a random flip from an unsatisfied clause
+    #@p = 0 is equal to the GSAT algorithm, WalkSAT typically uses .5
     @p = 0.5
-    ###End variables
+    
+    #Machine's minimum int value
+    @@FIXNUM_MIN = -(2**(0.size * 8 -2))
+    ###End data structures and variables used###
   
     clause_count = 1;
     File.open(file_name).each_line{ |s|
       if(s.start_with?("p")) #get # of clauses  and vars
+        #DIMACS format: p cnf {vars} {clauses}
         vars = s.split(" ")[2].to_i
         @num_clauses = s.split(" ")[3].to_i
-        @assignments = Array.new(vars+1,false)#There is never a variable 0
+        @assignments = Array.new(vars+1,false)#There is never a variable 0, vars start at 1
         @active_clauses = Array.new(@num_clauses+1,true) #First clause at index 1
 
         #init all arrays
@@ -56,7 +63,7 @@ class WalkSAT
           cur_var = vars_in_clause[i].to_i
           @clauses_to_variables[clause_count] << cur_var
           if(cur_var > 0)
-            @variables_to_clauses[(cur_var*2)-1] << clause_count
+            @variables_to_clauses[(cur_var*2)-1] << clause_count #Positive value at location (2var-1)
           else #negated variable, put it in the correct array location: abs(var)*2
             @variables_to_clauses[((-1*cur_var)*2)] << clause_count
           end
@@ -66,9 +73,9 @@ class WalkSAT
     }
   end
   
+  #The basic WalkSAT algorithm
   def solve
     for restart in (1..@max_restarts)
-      puts restart
       random_assignment()
       for flip in (1..@max_flips)
         if(@num_clauses == 0)
@@ -82,25 +89,25 @@ class WalkSAT
         return @assignments
       end
     end
-    return nil
+    return nil #No solution found :(
   end
   
-  #Generates a random assignment and stores it into the assignemnts variable
+  #Generates a random assignment for all variables, resets all removed clauses, and applies the new assignment
   def random_assignment()
     for i in (0...@assignments.size())
       @assignments[i] = rand(2).zero?
     end
     @num_clauses = @active_clauses.size()-1
     @active_clauses = Array.new(@num_clauses+1,true) #First clause at index 1
-    #apply the random assignment
+    #Apply the new random assignment, remove satisfied clauses
     for i in 1...@assignments.size()
       flip(i,false)
     end
   end
 
   #Finds the next variable to flip
-  #i.e. The one that satisfies the most variables if flipped (Can be 0 or negative)
-  # =>  Or with probability @p, choose a random variable in an unsatclause
+  #i.e. With probability 1-@p The one that satisfies the most variables if flipped (Can be 0 or negative)
+  # =>  Or with probability @p, choose a random variable in an unsat clause
   def find_next_flip()
     walksat_prob = rand(100)/100.0
     if walksat_prob <= @p #Choose a variable from a random unsat clause and flip TODO make better
@@ -118,7 +125,7 @@ class WalkSAT
       #choose the variable that sats the most clauses (can be 0 or neg)
       num_sat = 0
       best_var = 0
-      best_var_score = -11111111 #TODOchange to integer min
+      best_var_score = @@FIXNUM_MIN #integer min
       for var in 1...@assignments.size()
         score = calculate_flip_affect(var)
         if(score > best_var_score)
@@ -130,7 +137,8 @@ class WalkSAT
     end
   end
   
-  #how many SAT clauses would we gain if we fliped, var
+  #How many SAT clauses would we gain if we fliped, var
+  #This score is used to determine which variable to flip (the one that sats the most clauses)
   def calculate_flip_affect(var)
     num_of_clauses = @num_clauses 
     @assignments[var] = !@assignments[var] #do hypothetical flip (undone before return)
@@ -139,7 +147,7 @@ class WalkSAT
     #-1 for clauses that were true and became false 
     #+1 for clauses that were false and became true
     #0 for clauses not affected
-    for clause_index in 0...@variables_to_clauses[(2*var)-1].size() #Check effects to V
+    for clause_index in 0...@variables_to_clauses[(2*var)-1].size() #Check effects to all clauses containing V
       clause = @clauses_to_variables[@variables_to_clauses[(2*var)-1][clause_index]]
       is_sat = false
       for i in 0...clause.size()
@@ -148,19 +156,19 @@ class WalkSAT
           break #The clause is SAT, check next one without looking at more variables within the clause
         end
       end
-      #if it wasnt SAT, was it SAT before?
+      #If it wasn't SAT, was it SAT before?
       if is_sat
-        if(@active_clauses[@variables_to_clauses[(2*var)-1][clause_index]])#was it false before
-          num_of_clauses -= 1 #yup, it was. we gained a clause, +1
+        if(@active_clauses[@variables_to_clauses[(2*var)-1][clause_index]])#Was it false before
+          num_of_clauses -= 1 #Yup, it was. We gained a clause, +1
         end
       else
-        if(!@active_clauses[@variables_to_clauses[(2*var)-1][clause_index]])#was it true before
-          num_of_clauses += 1 #yup, it was.  We lost a clause  -1 clause
+        if(!@active_clauses[@variables_to_clauses[(2*var)-1][clause_index]])#Was it true before
+          num_of_clauses += 1 #Yup, it was.  We lost a clause  -1
         end
       end
     end #end clause loop
     
-    for clause_index in 0...@variables_to_clauses[(2*var)].size() #Check effects to V
+    for clause_index in 0...@variables_to_clauses[(2*var)].size() #Check effects to all clauses containing -V
       clause = @clauses_to_variables[@variables_to_clauses[(2*var)][clause_index]]
       is_sat = false
       for i in 0...clause.size()
@@ -171,12 +179,12 @@ class WalkSAT
       end
       #if it wasnt SAT, was it SAT before?
       if is_sat
-        if(@active_clauses[@variables_to_clauses[(2*var)][clause_index]])#was it false before
-          num_of_clauses -= 1 #yup, it was. we gained a clause, +1
+        if(@active_clauses[@variables_to_clauses[(2*var)][clause_index]])#Was it false before
+          num_of_clauses -= 1 #Yup, it was. We gained a clause, +1
         end
       else
-        if(!@active_clauses[@variables_to_clauses[(2*var)][clause_index]])#was it true before
-          num_of_clauses += 1 #yup, it was.  We lost a clause  -1 clause
+        if(!@active_clauses[@variables_to_clauses[(2*var)][clause_index]])#Was it true before
+          num_of_clauses += 1 #Yup, it was.  We lost a clause  -1 
         end
       end
     end #end clause loop
@@ -186,13 +194,15 @@ class WalkSAT
     return @num_clauses - num_of_clauses
   end
   
-  #Flips the variable and updates data structures
+  #Flips the variable, var, and updates data structures and variables
+  #Also can be used to just update data structures after a randomn assignment is made.
+  #When flip is false, no variable assignment is changed.
   def flip(var, flip)
     if(flip)
       #Flip it, flip it good
       @assignments[var] = !@assignments[var]
     end
-    for clause_index in 0...@variables_to_clauses[(2*var)-1].size() #Check effects to V
+    for clause_index in 0...@variables_to_clauses[(2*var)-1].size() #Check effects to clauses containing V
       clause = @clauses_to_variables[@variables_to_clauses[(2*var)-1][clause_index]]
       is_sat = false
       for i in 0...clause.size()
@@ -215,7 +225,7 @@ class WalkSAT
       end
     end #end clause loop
     
-    for clause_index in 0...@variables_to_clauses[(2*var)].size() #Check effects to V
+    for clause_index in 0...@variables_to_clauses[(2*var)].size() #Check effects to clauses containing -V
       clause = @clauses_to_variables[@variables_to_clauses[(2*var)][clause_index]]
       is_sat = false
       for i in 0...clause.size()
