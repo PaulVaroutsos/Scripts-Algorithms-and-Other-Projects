@@ -1,12 +1,21 @@
 === Scripts, Algorithms, and Other Projects ===
 Contributors: Paul Varoutsos
 Link: www.GitHub.com/PaulVaroutsos
-Tags: SAT, WalkSAT, Ruby
+Tags: SAT, WalkSAT, Ruby, wireless, networks, AI, Shogi
 
 == Description ==
 This is a git repo of various algorithms I've written over the years, as well as
 various other files.
 
 == Changelog ==
+2012-3-29
+Updated WalkSAT algorithm
+2012-3-25
+Added a JAR dependency script
+Added implementations of a binary tree and tree traversal algorithms
+Added a wireless network cracking tutorial
+Added a Java and Ruby implementation of Warnsdorff's algorithm
+Added the results of my research on rectangle free grid coloring
+Added a presentation on my ShogiAI
 2012-3-24
 Added a Ruby implementation of WalkSAT
