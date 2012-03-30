@@ -110,17 +110,19 @@ class WalkSAT
   # =>  Or with probability @p, choose a random variable in an unsat clause
   def find_next_flip()
     walksat_prob = rand(100)/100.0
-    if walksat_prob <= @p #Choose a variable from a random unsat clause and flip TODO make better
+    if walksat_prob <= @p #Choose a variable from a random unsat clause and flip
+      unsat_clauses = Array.new
       for i in 1...@active_clauses.size()
         if(@active_clauses[i])#active clause = not sat
-          var = @clauses_to_variables[i][rand(@clauses_to_variables[i].size())]
-          if var > 0
-            return var
-          else
-            return -var
-          end
+          unsat_clauses << i
         end
       end
+      temp_clause = @clauses_to_variables[unsat_clauses[rand(unsat_clauses.size())]]
+      flip_var = temp_clause[rand(temp_clause.size())]
+      if flip_var > 0
+        return flip_var
+      end
+      return -1 * flip_var
     else
       #choose the variable that sats the most clauses (can be 0 or neg)
       num_sat = 0
