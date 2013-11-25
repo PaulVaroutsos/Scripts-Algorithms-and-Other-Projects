@@ -1,3 +1,4 @@
+package trees;
 import java.util.Stack;
 
 /**
@@ -41,6 +42,8 @@ import java.util.Stack;
  * 
  * @author Paul Varoutsos
  * November 2008
+ * 
+ * Take Home Midterm
  *
  */
 
@@ -159,6 +162,7 @@ public class BinaryTree {
 	 * Post:None
 	 */
 	public BinaryTree getLeftChild(){
+		if(isEmpty()) throw new TreeException("Tree is empty");
 		return leftChild;
 	}
 	
@@ -170,6 +174,7 @@ public class BinaryTree {
 	 * Post:None
 	 */
 	public BinaryTree getRightChild(){
+		if(isEmpty()) throw new TreeException("Tree is empty");
 		return rightChild;
 	}
 
@@ -286,7 +291,7 @@ public class BinaryTree {
 		} else {
 			
 			BinaryTree rightTree = new BinaryTree(getRightChild());
-			rightTree = null;
+			rightChild = null;
 			return rightTree;
 		}
 	}
@@ -452,6 +457,9 @@ public class BinaryTree {
 	 * Post:None
 	 */
 	public String toString(){
+		if(isEmpty()){
+			return "Empty";
+		}
 		return root.toString();
 	}
 }
