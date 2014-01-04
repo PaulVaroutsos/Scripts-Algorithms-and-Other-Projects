@@ -1,0 +1,6 @@
+Set the project's "working directory" in NetBeans to the root directory of this project.
+
+Package ec.* is the source code for the ECJ evolutionary computation package.  All source code for grid coloring is found in ec.app.Grid.  Source code for other apps have been removed.  To see more ECJ examples, download the complete source code from ECJ's website at http://cs.gmu.edu/~eclab/projects/ecj/
+
+ECJ's main class is ec.Evolve and it takes in a parameter file that may be given as a command line parameter or indicated from inside NetBean's properties menu as a run argument.
+
