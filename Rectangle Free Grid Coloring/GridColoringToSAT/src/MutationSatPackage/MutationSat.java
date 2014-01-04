@@ -22,12 +22,11 @@
  *    -Where holes is the number of holes that will be randomly punched into the
  *     grid.
  *
- * @autho Mike Groh
+ * @author Mike Groh
  *
  */
 package MutationSatPackage;
 
-import MutationSatPackage.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -47,9 +46,7 @@ public class MutationSat {
     public static void main(String[] args) throws FileNotFoundException {
         try {
             Random R = new Random();
-            //int NumberOfRandoms = 30;
-            //System.out.println(NumberOfRandoms);
-            //int diff = 0;
+            
             String fileOutput = "";
             String fileName = ConstantHolder.fileNameOutput;
             File file = new File(fileName);
@@ -57,16 +54,10 @@ public class MutationSat {
 
             FileReader gridSolution;
 
-//          if (args != null) {
             gridSolution = new FileReader(args[0]);
             int diff = Integer.parseInt(args[1]);
             int NumberOfRandoms = Integer.parseInt(args[2]);
 
-//        } else {
-//            gridSolution = new FileReader("satsolution.txt");
-//           // NumberOfRandoms = 96;
-//            diff =1;
-//        }
             ConstantHolder.setRowAndCol(ConstantHolder.ROW_SIZE - diff, ConstantHolder.COLUMN_SIZE - diff);
             coloringGrid = new int[ConstantHolder.ROW_SIZE][ConstantHolder.COLUMN_SIZE];
 
@@ -140,8 +131,6 @@ public class MutationSat {
                                 //110 210 310 .... 201 301 401
                                 //these values can not be used since 0 is not valid value
 
-
-
                                 if (value > 0 && value < 5 && column != 0) {
 
                                     //place the value into the sudoku puzzle
@@ -167,12 +156,9 @@ public class MutationSat {
                         }
                         output += "\n";
                     }
-
-                    // System.out.println(output);
-
                 }
             } else {
-                System.out.println("The sat solver was not able to find a solution");
+                System.out.println("The sat solver was not able to find a solution.");
             }
             //  }
             MapTo17by17 grid17b17 = new MapTo17by17(coloringGrid, NumberOfRandoms);
@@ -180,10 +166,9 @@ public class MutationSat {
             out.write(fileOutput);
             out.close();
 
-        } catch (Exception E) {
-            E.printStackTrace();
+        } catch (Exception e) {
+            System.err.println(e.getCause());
         }
-
     }
 
     /**
@@ -226,7 +211,6 @@ class MapTo17by17 {
                         output.append(index + " 0\n");
                     }
                     counter++;
-
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -238,8 +222,6 @@ class MapTo17by17 {
                 Logger.getLogger(MapTo17by17.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-
     }
 
     public ArrayList<Integer> pickRandoms(int NumberOfRandoms) {
@@ -303,6 +285,5 @@ class ConstantHolder {
             BASE = COLUMN_SIZE;
         }
     }
-    static String SOLUTION_COUNTER = 1 + "";
+    static String SOLUTION_COUNTER = "1";
 }
-

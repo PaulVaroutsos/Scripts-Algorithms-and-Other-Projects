@@ -1,5 +1,3 @@
-package gridcoloringtosat;
-
 /**
  *  This class contains the constants used throughout the gridcoloringtosat
  *  package.
@@ -11,10 +9,12 @@ package gridcoloringtosat;
  * 
  * @author Mike Groh, Paul Varoutsos
  */
+package gridcoloringtosat;
+
 public class ConstantHolder {
      static final int NUM_COLORS = 4;
-     static final int ROW_SIZE = 14;
-     static final int COLUMN_SIZE = 8;
+     static final int ROW_SIZE = 17;
+     static final int COLUMN_SIZE = 17;
      static int BASE = ROW_SIZE;
 
      static{
@@ -26,5 +26,5 @@ public class ConstantHolder {
             BASE = COLUMN_SIZE;
         }
      }
-    static String SOLUTION_COUNTER =1+"";
+    static String SOLUTION_COUNTER ="1";
 }
