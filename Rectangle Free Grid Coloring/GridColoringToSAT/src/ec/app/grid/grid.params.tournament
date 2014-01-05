@@ -1,3 +1,4 @@
+#parent.0 = tournament.params
 parent.0 = ../../simple/simple.params
 parent.1 = tournament.params
 select.tournament.size =                2.0

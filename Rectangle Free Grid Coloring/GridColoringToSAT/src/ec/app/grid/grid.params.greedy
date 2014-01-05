@@ -1,3 +1,5 @@
+#parent.0 = ../../simple/simple.params
+#parent.1 = greedy.params
 parent.0 = greedy.params
 pop.subpop.0.species.pipe.source.0.source.0.top = .1
 pop.subpop.0.species.pipe.source.0.source.0.gets = 1
