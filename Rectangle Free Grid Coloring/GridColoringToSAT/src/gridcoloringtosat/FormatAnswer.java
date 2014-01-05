@@ -1,5 +1,4 @@
 /**
- *
  * Formats a walksat output (variables on many lines) to a file that contains
  * "Instance Satisfiable" on the first line, then all variable values printed
  * on the second line to be easily parsed by other classes in this package.

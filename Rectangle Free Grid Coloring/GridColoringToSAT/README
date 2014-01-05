@@ -1,0 +1,13 @@
+This project contains three main packages:
+1.Evolutionary Computation
+package ec
+
+This package (ec.*) contains all of the source code for building evolutionary computation programs.
+
+ECJ's main class is ec.Evolve and it takes in a parameter file that may be given as a command line parameter or indicated from inside the NetBean's project properties menu as a run argument.
+
+package ec.app.grid
+This package contains Grid.java, which is a subclass of ECJ's Problem class, that defines the evaluation function for solving grid coloring.  This is the only class of interest.  This class is given to ECJ in a parameter file (included) and utilized by ec.Evolve.
+Source code for other apps have been removed.  To see more ECJ examples, download the complete source code from ECJ's website at http://cs.gmu.edu/~eclab/projects/ecj/
+
+Example parameter files are included in this directory.

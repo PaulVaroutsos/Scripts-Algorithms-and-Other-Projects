@@ -17,6 +17,8 @@ import java.io.FileWriter;
 import java.util.Scanner;
 
 public class UnMapper {
+    
+    private static String INPUT_FILE = "src/gridcoloringtosat/satsolution.txt";
 
     //this variable is where we will store our answered grid coloring if a
     //solution is found
@@ -26,7 +28,7 @@ public class UnMapper {
         try {
             //formattAnswer FA = new formattAnswer();
             String fileOutput = "";
-            String fileName = "src/solution_squares/"
+            String fileName = "src/gridcoloringtosat/solution_squares/"
                     + ConstantHolder.ROW_SIZE + "x" + ConstantHolder.COLUMN_SIZE + "Answer"
                     + ConstantHolder.SOLUTION_COUNTER + "validation.txt";
             File file = new File(fileName);
@@ -37,7 +39,7 @@ public class UnMapper {
             if (args == null) {
                 gridSolution = new FileReader(args[0]);
             } else {
-                gridSolution = new FileReader("src/gridcoloringtosat/satsolution.txt");
+                gridSolution = new FileReader(INPUT_FILE);
             }
 
             //scanner used to read the file
@@ -160,10 +162,9 @@ public class UnMapper {
             out.write(fileOutput);
             val.ValidateGridColoring(out);
 
-        } catch (Exception E) {
-            E.printStackTrace();
+        } catch (Exception e) {
+            System.err.println(e.getCause());
         }
-
     }
 
     /**

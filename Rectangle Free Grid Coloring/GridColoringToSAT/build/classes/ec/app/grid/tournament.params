@@ -23,7 +23,7 @@ pop.subpop.0.species.pipe.source.0.source.0 = ec.select.TournamentSelection
 #pop.subpop.0.species.pipe.source.0.source.0.gets = .9
 
 #TournamentSelection
-#select.tournament.size =                7
+#select.tournament.size = 7
 
 #SigmaScalingSelection
 # No Params
@@ -51,11 +51,10 @@ pop.subpop.0.species.pipe.source.0.source.0 = ec.select.TournamentSelection
 
 pop.subpop.0.species.pipe.source.0.source.1 = same
 
-pop.subpop.0.species.min-gene	= 1
-pop.subpop.0.species.max-gene 	= 4
+pop.subpop.0.species.min-gene        = 1
+pop.subpop.0.species.max-gene         = 4
 
 pop.subpop.0.species.ind = ec.vector.IntegerVectorIndividual
 pop.subpop.0.species.fitness = ec.simple.SimpleFitness
 
 pop.subpop.0.species.crossover-type =two
-

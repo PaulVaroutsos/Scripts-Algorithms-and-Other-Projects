@@ -1,0 +1,14 @@
+This package contains various classes used to convert the rectangle free grid
+coloring problem to an instance of SAT.
+
+To map a problem to SAT:
+1.  Set the NUM_COLORS, ROW_SIZE, and COLUMN_SIZE variables in ConstantHolder.java
+2.  Run Mapper.java
+The output file can be used in any SAT-solver such as walksat or minisat.
+
+To unmap a solution from a SAT solver output
+1.  Set the INPUT_FILE variable of UnMapper.java
+2.  Run UnMapper.java
+The validation result will be output into src/gridcoloringtosat/solution_squares
+(The file to be unmapped should be formatted with one line saying "Instance Satisfiable"
+followed by all of the variables on one line)

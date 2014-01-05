@@ -4,7 +4,7 @@
  *
  *  It is important to remember to ensure that the ROW_SIZE and COLUMN_SIZE
  *  values match the size of the grid you would like to UnMap and Validate.
- *  It can be easy toforget if you map one grid size and decided to unmap
+ *  It can be easy to forget if you map one grid size and decided to unmap
  *  a different size.
  * 
  * @author Mike Groh, Paul Varoutsos

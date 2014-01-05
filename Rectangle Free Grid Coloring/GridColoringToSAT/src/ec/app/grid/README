@@ -1,6 +1,21 @@
-Set the project's "working directory" in NetBeans to the root directory of this project.
+To run this from NetBeans:
+1. Set the project's "working directory" to this directory.
+2. Set the projects main class to ec.Evolve
+3. Set the projects arguments to "-file grid.params.greedy" or any parameter 
+file of your choice.
+(Or compile and run from the command line)
 
-Package ec.* is the source code for the ECJ evolutionary computation package.  All source code for grid coloring is found in ec.app.Grid.  Source code for other apps have been removed.  To see more ECJ examples, download the complete source code from ECJ's website at http://cs.gmu.edu/~eclab/projects/ecj/
+Package ec.* contains the source code for the ECJ. 
+All source code for grid coloring is found in ec.app.Grid.  Source code for 
+other apps have been removed.  To see more ECJ examples, download the complete 
+source code from ECJ's website at http://cs.gmu.edu/~eclab/projects/ecj/
 
-ECJ's main class is ec.Evolve and it takes in a parameter file that may be given as a command line parameter or indicated from inside NetBean's properties menu as a run argument.
+Grid.java is the source code for solving rectangle free grid coloring.
 
+ECJ's main class is ec.Evolve and it takes in a parameter file that may be given
+as a command line parameter or indicated from inside NetBean's properties menu
+as a run argument.  Two example files are included, grid.params.greedy and
+grid.params.tournament.  They inherit the properties from their parent parameter
+files greedy.params and tournament.params.  Keep in mind the genome size must be
+consistent with the size of the grid.  For example for a 17x17 grid, a genome
+size of 289 is needed.

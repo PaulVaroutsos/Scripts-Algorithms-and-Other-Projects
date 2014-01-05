@@ -46,8 +46,8 @@ public class Validator {
         }
         printValidationGrid();
         if (!ohCrapItDidntWork) {
-            System.out.println("Calidation succssful.");
-            OUTPUT += "Calidation successful.\n";
+            System.out.println("Validation succssful.");
+            OUTPUT += "Validation successful.\n";
         }
         out.write(OUTPUT);
         out.close();

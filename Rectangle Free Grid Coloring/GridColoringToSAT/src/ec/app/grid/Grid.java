@@ -1,12 +1,13 @@
 /**
- * A ECJ Problem class that contains the evaluate function that determines how
- * closely an "individual" is to being a perfectly colored grid. 
+ * A ECJ Problem class that contains the evaluate function to determines how
+ * closely an "individual" is to being a perfectly rectangle-free colored grid. 
  * 
  * This Problem is currently only able to evaluate square grids (such as 17x17 
  * and not 21x12).
  * 
- * Caution: Ensure the Validator class has the correct row and column sizes 
- * defined!
+ * Caution: Ensure the Validator class(below) has the correct row and column 
+ * sizes defined!  
+ * Currently configured for 17x17 grids
  * 
  * @author Paul Varoutsos
  */
@@ -27,7 +28,7 @@ public class Grid extends Problem implements SimpleProblemForm {
     public void evaluate(final EvolutionState state, final Individual ind, final int subpopulation, final int threadnum) {
         IntegerVectorIndividual ind2 = (IntegerVectorIndividual) ind;
         double fitness = 0;
-        Validator VLD = new Validator(ind2.genome);
+        Validator vld = new Validator(ind2.genome);
 
         /*Normally we want 0 to be the highest fitness and 0-fitness to be the
          * individual.  However, some selection algorithms require fitness to be
@@ -38,7 +39,7 @@ public class Grid extends Problem implements SimpleProblemForm {
          */
 
         //new fitness for square grids
-        fitness = VLD.nChoose2() - VLD.getNumberOfRec();
+        fitness = vld.nChoose2() - vld.getNumberOfRec();
 
         ((SimpleFitness) (ind2.fitness)).setFitness(state, (float) fitness, false);
     }
@@ -58,8 +59,7 @@ public class Grid extends Problem implements SimpleProblemForm {
  * @author Mike Groh
  */
 class Validator {
-
-    String OUTPUT = "";
+    
     //The unmapped solution
     int[][] coloringGrid;
     int numberOfRec = 0;
@@ -71,7 +71,7 @@ class Validator {
 
     public Validator(int[] coloringGrid) {
         this.coloringGrid = convertToGrid(coloringGrid);
-        ValidateGridColoring();
+        validateGridColoring();
     }
 
     public int[][] convertToGrid(int[] coloringGrid) {
@@ -89,7 +89,7 @@ class Validator {
     /**
      * Checks whether or not the grid contains any sub rectangles
      */
-    void ValidateGridColoring() {
+    void validateGridColoring() {
         boolean ohCrapItDidntWork = false;
         for (int i = 1; i <= ROW_SIZE && !ohCrapItDidntWork; i++) {
             for (int j = 1; j <= COLUMN_SIZE && !ohCrapItDidntWork; j++) {
@@ -98,32 +98,21 @@ class Validator {
                         int g = 0;
                     }
                     if (coloringGrid[translate(i)][translate(j)] == k) {
-                        if (CheckForRectangles(i, j, k)) {
-                            //  System.out.println("found rectangle");
-                            // numberOfRec++;
-                            OUTPUT += "found rectangle+\n";
-                            // ohCrapItDidntWork = true;
-                        }
+                        checkForRectangles(i, j, k);
                     }
                 }
             }
         }
-        // printValidationGrid();
-        if (!ohCrapItDidntWork) {
-            //  System.out.println("validation sucessful");
-            OUTPUT += "validation sucessful\n";
-        }
     }
 
     //Helper method that checks for rectangles
-    private boolean CheckForRectangles(int i, int j, int k) {
+    private boolean checkForRectangles(int i, int j, int k) {
 
         boolean TheresSomptinUpWitYourCodeMan = false;
         for (int a = i; a <= ROW_SIZE && !TheresSomptinUpWitYourCodeMan; a++) {
             if (a == i) {
                 //do nothing
             } else {
-                int debug = coloringGrid[translate(a)][translate(j)];
                 if (coloringGrid[translate(a)][translate(j)] == k) {
                     for (int b = j; b <= COLUMN_SIZE && !TheresSomptinUpWitYourCodeMan; b++) {
                         if (b == j) {
@@ -132,10 +121,6 @@ class Validator {
                             if (coloringGrid[translate(i)][translate(b)] == k) {
                                 if (coloringGrid[translate(a)][translate(b)] == k) {
                                     numberOfRec++;
-                                    if (numberOfRec % 81 == 0) {
-                                        int adf = 0;
-                                    }
-                                    // TheresSomptinUpWitYourCodeMan = true;
                                 }
                             }
                         }
@@ -144,29 +129,12 @@ class Validator {
             }
         }
 
-
-
         if (TheresSomptinUpWitYourCodeMan) {
             solutionGrid[translate(i)][translate(j)] = 1;
         } else {
             solutionGrid[translate(i)][translate(j)] = 0;
         }
         return TheresSomptinUpWitYourCodeMan;
-    }
-
-    /**
-     * Prints the grid
-     */
-    private void printValidationGrid() {
-        String output = "";
-        for (int i = 1; i <= ROW_SIZE; i++) {
-            for (int j = 1; j <= COLUMN_SIZE; j++) {
-                output += solutionGrid[translate(i)][translate(j)] + " ";
-            }
-            output += "\n";
-        }
-
-        OUTPUT += output + "\n";
     }
 
     //Translates to array locations
@@ -183,4 +151,3 @@ class Validator {
         return num;
     }
 }
-

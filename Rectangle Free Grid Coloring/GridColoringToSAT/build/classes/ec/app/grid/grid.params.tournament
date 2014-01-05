@@ -1,0 +1,4 @@
+parent.0 = ../../simple/simple.params
+parent.1 = tournament.params
+select.tournament.size =                2.0
+pop.subpop.0.species.mutation-prob = 0.005
