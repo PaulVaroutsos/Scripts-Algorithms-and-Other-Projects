@@ -4,8 +4,8 @@ Link: www.GitHub.com/PaulVaroutsos
 Tags: SAT, WalkSAT, Ruby, wireless, networks, AI, Evolutionary Computation, Rectangle Free Grid Coloring, Shogi
 
 == Description ==
-This is a git repo of various things I've written over the years, that aren't big 
-enough to warrant their own GitHub repo.
+This is a git repo of various things I've written over the years that aren't big 
+enough to warrant their own repo.
 
 == Contents ==
 XML file that can be used to combine many jar dependencies into a single jar file.
