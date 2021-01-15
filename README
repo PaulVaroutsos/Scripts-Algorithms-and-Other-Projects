@@ -8,7 +8,7 @@ This is a git repo of various things I've written over the years that aren't big
 enough to warrant their own repo.
 
 == Contents ==
-XML file that can be used to combine many jar dependencies into a single jar file.
+An XML file that can be used to combine many jar dependencies into a single jar file.
 A presentation on how to crack wireless networks (WPA and WEP).
 A Ruby and Java implementation of Warnsdorff's algorithm for solving knight's tour.
 A presentation, research poster, and code related to rectangle free grid coloring.
