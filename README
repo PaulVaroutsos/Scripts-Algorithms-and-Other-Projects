@@ -9,10 +9,8 @@ enough to warrant their own repo.
 
 == Contents ==
 XML file that can be used to combine many jar dependencies into a single jar file.
-Various binary tree, tree traversal, and pre/in/postfix expression implementations.
 A presentation on how to crack wireless networks (WPA and WEP).
-A Ruby and Java implementation of Warnsdorff's algorithm for solving knights tour.
+A Ruby and Java implementation of Warnsdorff's algorithm for solving knight's tour.
 A presentation, research poster, and code related to rectangle free grid coloring.
-A presentation on an AI for the board game 'Shogi.'
 A Ruby implementation of the WalkSAT/GSAT algorithm.
 
