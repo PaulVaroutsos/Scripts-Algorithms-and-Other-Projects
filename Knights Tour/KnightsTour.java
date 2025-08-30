@@ -38,7 +38,7 @@ public class KnightsTour {
 		//initialize all squares to 0 representing a
 		//board with all squares unvisited.
 		for(int i = 0; i < SIZE; i++){
-			for(int j = 0; i < SIZE; i++){
+			for(int j = 0; j < SIZE; j++){
 				board[i][j] = UNVISITED_LOCATION;
 			}	
 		}
@@ -245,3 +245,4 @@ public class KnightsTour {
 		}
 	}
 }
+
